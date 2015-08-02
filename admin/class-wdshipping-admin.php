@@ -47,7 +47,45 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 
 		function wdshipping_settings_menu() {
 
-			add_options_page( __( 'WooCommerce Dynamic Shipping', WCEmails_TEXT_DOMAIN ), 'WooCommerce Dynamic Shipping', 'manage_options', 'wdshipping-settings', array( $this, 'wdshipping_settings_callback' ));
+			add_options_page( __( 'WooCommerce Dynamic Shipping', WDShipping_TEXT_DOMAIN ), 'WooCommerce Dynamic Shipping', 'manage_options', 'wdshipping-settings', array( $this, 'wdshipping_settings_callback' ));
+
+		}
+
+		function wdshipping_settings_callback() {
+
+			?>
+			<div class="wrap">
+				<h2><?php _e( 'Woocommerce Dynamic Shipping Settings', WDShipping_TEXT_DOMAIN ); ?></h2>
+				<?php
+				if ( ! isset ( $_REQUEST[ 'type' ] ) ) {
+					$type = 'today';
+				} else {
+					$type = $_REQUEST[ 'type' ];
+				}
+				$all_types = array ( 'add-shipping', 'view-shipping' );
+				if ( ! in_array ( $type, $all_types ) ) {
+					$type = 'add-shipping';
+				}
+				?>
+				<ul class="subsubsub">
+					<li class="today"><a class ="<?php echo ($type == 'add-shipping') ? 'current' : ''; ?>" href="<?php echo add_query_arg ( array ( 'type' => 'add-shipping' ), admin_url ( 'admin.php?page=wdshipping-settings' ) ); ?>"><?php _e( 'Add Shipping', WDShipping_TEXT_DOMAIN ); ?></a> |</li>
+					<li class="today"><a class ="<?php echo ($type == 'view-shipping') ? 'current' : ''; ?>" href="<?php echo add_query_arg ( array ( 'type' => 'view-shipping' ), admin_url ( 'admin.php?page=wdshipping-settings' ) ); ?>"><?php _e( 'View Your Shippings', WDShipping_TEXT_DOMAIN ); ?></a></li>
+				</ul>
+				<?php $this->wdshipping_render_sections( $type ); ?>
+			</div>
+			<?php
+
+		}
+
+		function wdshipping_render_sections( $type ) {
+
+			if( $type == 'add-shipping' ) {
+				$this->wdshipping_render_add_shipping_section();
+			} else if( $type == 'view-shipping' ) {
+				$this->wdshipping_render_view_shipping_section();
+			} else {
+				$this->wdshipping_render_add_shipping_section();
+			}
 
 		}
 
