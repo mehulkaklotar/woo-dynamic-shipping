@@ -41,6 +41,14 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 		 */
 		public function __construct() {
 
+			add_action('admin_menu', array( $this, 'wdshipping_settings_menu' ) );
+
+		}
+
+		function wdshipping_settings_menu() {
+
+			add_options_page( __( 'WooCommerce Dynamic Shipping', WCEmails_TEXT_DOMAIN ), 'WooCommerce Dynamic Shipping', 'manage_options', 'wdshipping-settings', array( $this, 'wdshipping_settings_callback' ));
+
 		}
 
 	}

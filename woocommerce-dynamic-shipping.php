@@ -10,7 +10,7 @@
  * Requires at least: 4.1
  * Tested up to: 4.2
  *
- * Text Domain: woocommerce-dynamic-shipping
+ * Text Domain: wdshipping
  *
  * @package WooCommerce_Dynamic_Shipping
  * @category Core
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if( ! class_exists( 'WooCommerce_Dynamic_Shipping' ) ) {
 
 	/**
-	 * Main WooCommerce Custom Emails Class
+	 * Main WooCommerce Dynamic Shipping Class
 	 *
 	 * @class WooCommerce_Dynamic_Shipping
 	 * @version	0.1
@@ -62,14 +62,14 @@ if( ! class_exists( 'WooCommerce_Dynamic_Shipping' ) ) {
 		 * @since 0.1
 		 */
 		public function __clone() {
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'woocommerce-dynamic-shipping' ), '0.1' );
+			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wdshipping' ), '0.1' );
 		}
 		/**
 		 * Unserializing instances of this class is forbidden.
 		 * @since 2.1
 		 */
 		public function __wakeup() {
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'woocommerce-dynamic-shipping' ), '0.1' );
+			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wdshipping' ), '0.1' );
 		}
 
 		/**
@@ -95,7 +95,7 @@ if( ! class_exists( 'WooCommerce_Dynamic_Shipping' ) ) {
 			$this->define( 'WDShipping_PLUGIN_FILE', __FILE__ );
 			$this->define( 'WDShipping_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 			$this->define( 'WDShipping_VERSION', $this->version );
-			$this->define( 'WDShipping_TEXT_DOMAIN', 'wcemails' );
+			$this->define( 'WDShipping_TEXT_DOMAIN', 'wdshipping' );
 			$this->define( 'WDShipping_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 			$this->define( 'WDShipping_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 		}
@@ -149,9 +149,9 @@ if( ! class_exists( 'WooCommerce_Dynamic_Shipping' ) ) {
  * Returns the main instance of WDShipping to prevent the need to use globals.
  *
  * @since  0.1
- * @return WooCommerce_Custom_Emails
+ * @return WooCommerce_Dynamic_Shipping
  */
 function WDShipping() {
-	return WooCommerce_Custom_Emails::instance();
+	return WooCommerce_Dynamic_Shipping::instance();
 }
 WDShipping();
