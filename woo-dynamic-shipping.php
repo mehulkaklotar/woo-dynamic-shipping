@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: Woocommerce Dynamic Shipping
+ * Plugin Name: Woo Dynamic Shipping
  * Plugin URI: http://www.test.com/
  * Description: A woocommerce add on to support dynamic shipping options as per users requirement
  * Version: 1.0
@@ -12,7 +12,7 @@
  *
  * Text Domain: wdshipping
  *
- * @package WooCommerce_Dynamic_Shipping
+ * @package Woo_Dynamic_Shipping
  * @category Core
  * @author mehulkaklotar
  */
@@ -20,35 +20,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if( ! class_exists( 'WooCommerce_Dynamic_Shipping' ) ) {
+if( ! class_exists( 'Woo_Dynamic_Shipping' ) ) {
 
 	/**
-	 * Main WooCommerce Dynamic Shipping Class
+	 * Main Woo Dynamic Shipping Class
 	 *
-	 * @class WooCommerce_Dynamic_Shipping
+	 * @class Woo_Dynamic_Shipping
 	 * @version	0.1
 	 */
-	final class WooCommerce_Dynamic_Shipping {
+	final class Woo_Dynamic_Shipping {
 
 		/**
 		 * @var string
 		 */
 		public $version = '1.0';
 		/**
-		 * @var WooCommerce_Dynamic_Shipping The single instance of the class
+		 * @var Woo_Dynamic_Shipping The single instance of the class
 		 * @since 2.1
 		 */
 		protected static $_instance = null;
 
 		/**
-		 * Main WooCommerce_Dynamic_Shipping Instance
+		 * Main Woo_Dynamic_Shipping Instance
 		 *
-		 * Ensures only one instance of WooCommerce_Dynamic_Shipping is loaded or can be loaded.
+		 * Ensures only one instance of Woo_Dynamic_Shipping is loaded or can be loaded.
 		 *
 		 * @since 0.1
 		 * @static
 		 * @see WDShipping()
-		 * @return WooCommerce_Dynamic_Shipping - Main instance
+		 * @return Woo_Dynamic_Shipping - Main instance
 		 */
 		public static function instance() {
 			if ( is_null( self::$_instance ) ) {
@@ -149,9 +149,9 @@ if( ! class_exists( 'WooCommerce_Dynamic_Shipping' ) ) {
  * Returns the main instance of WDShipping to prevent the need to use globals.
  *
  * @since  0.1
- * @return WooCommerce_Dynamic_Shipping
+ * @return Woo_Dynamic_Shipping
  */
 function WDShipping() {
-	return WooCommerce_Dynamic_Shipping::instance();
+	return Woo_Dynamic_Shipping::instance();
 }
 WDShipping();
