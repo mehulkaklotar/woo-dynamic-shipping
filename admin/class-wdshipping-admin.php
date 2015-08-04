@@ -190,6 +190,62 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 
 		}
 
+		function wdshipping_email_actions_details() {
+
+			if( isset( $_POST['wdshipping_submit'] ) ) {
+
+				$title = filter_input( INPUT_POST, 'wdshipping_title',FILTER_SANITIZE_STRING );
+				$description = filter_input( INPUT_POST, 'wdshipping_description',FILTER_SANITIZE_STRING );
+				$enable = filter_input( INPUT_POST, 'wdshipping_enable',FILTER_SANITIZE_STRING );
+				$enable = empty( $enable ) ? 'off' : $enable;
+
+				$wdshipping_email_details = get_option( 'wdshipping_email_details', array() );
+
+				$data = array(
+					'title' => $title,
+					'description' => $description,
+					'enable' => $enable,
+				);
+
+				if( isset( $_POST['wdshipping_update'] ) && ! empty( $_POST['wdshipping_update'] ) ) {
+					if( ! empty( $wdshipping_email_details ) ) {
+						foreach ( $wdshipping_email_details as $key => $details ) {
+							if( $key == $_POST['wdshipping_update'] ) {
+								$wdshipping_email_details[$key] = $data;
+							}
+						}
+					}
+				} else {
+					array_push( $wdshipping_email_details, $data );
+				}
+
+				update_option( 'wdshipping_email_details', $wdshipping_email_details );
+
+				add_settings_error( 'wdshipping-settings', 'error_code', $title.' is saved and if you have enabled it then you can see it in Woocommerce Shipping Settings Now', 'success' );
+
+			} else if( isset( $_REQUEST['wdshipping_delete'] ) && ! empty( $_REQUEST['wdshipping_delete'] ) ) {
+
+				$wdshipping_email_details = get_option( 'wdshipping_email_details', array() );
+
+				$delete_key = $_POST['delete'];
+
+				if( ! empty( $wdshipping_email_details ) ) {
+					foreach ( $wdshipping_email_details as $key => $details ) {
+						if( $key == $delete_key ) {
+							unset( $wdshipping_email_details[$key] );
+						}
+					}
+				}
+
+				update_option( 'wdshipping_email_details', $wdshipping_email_details );
+
+				add_settings_error( 'wdshipping-settings', 'error_code', 'Shipping settings deleted!', 'success' );
+
+			}
+
+		}
+
+
 	}
 
 }
