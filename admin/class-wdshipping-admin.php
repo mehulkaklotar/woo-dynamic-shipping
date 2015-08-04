@@ -159,6 +159,35 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 
 		function wdshipping_render_view_shipping_section() {
 
+			?>
+			<table class="form-table">
+				<tr>
+					<th><?php _e( 'Title', WDShipping_TEXT_DOMAIN ); ?></th>
+					<th><?php _e( 'Description', WDShipping_TEXT_DOMAIN ); ?></th>
+					<th><?php _e( 'Enable', WDShipping_TEXT_DOMAIN ); ?></th>
+					<th><?php _e( 'Action', WDShipping_TEXT_DOMAIN ); ?></th>
+				</tr>
+				<?php
+				$wdshipping_email_details = get_option( 'wdshipping_email_details', array() );
+				if( ! empty( $wdshipping_email_details ) ) {
+					foreach( $wdshipping_email_details as $key=>$details ) {
+						?>
+						<tr>
+							<td><?php echo $details['title']; ?></td>
+							<td><?php echo $details['description']; ?></td>
+							<td><?php echo $details['enable'] == 'on' ? 'Yes' : 'No'; ?></td>
+							<td>
+								<a href="<?php echo add_query_arg ( array ( 'type' => 'add-shipping', 'wdshipping_edit' => $key ), admin_url ( 'admin.php?page=wdshipping-settings' ) ); ?>" data-key="<?php echo $key; ?>"><?php _e( 'Edit', WDShipping_TEXT_DOMAIN ); ?></a>
+								<a href="<?php echo add_query_arg ( array ( 'type' => 'view-shipping', 'wdshipping_delete' => $key ), admin_url ( 'admin.php?page=wdshipping-settings' ) ); ?>" class="wdshipping_delete" data-key="<?php echo $key; ?>"><?php _e( 'Delete', WDShipping_TEXT_DOMAIN ); ?></a>
+							</td>
+						</tr>
+						<?php
+					}
+				}
+				?>
+			</table>
+			<?php
+
 		}
 
 	}
