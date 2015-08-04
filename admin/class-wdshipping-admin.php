@@ -89,6 +89,14 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 
 		}
 
+		function wdshipping_render_add_shipping_section() {
+
+		}
+
+		function wdshipping_render_view_shipping_section() {
+
+		}
+
 	}
 
 }
