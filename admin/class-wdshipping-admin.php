@@ -43,6 +43,8 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 
 			add_action('admin_menu', array( $this, 'wdshipping_settings_menu' ) );
 
+			add_action( 'admin_init', array( $this, 'wdshipping_email_actions_details' ) );
+
 		}
 
 		function wdshipping_settings_menu() {
@@ -168,9 +170,9 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 					<th><?php _e( 'Action', WDShipping_TEXT_DOMAIN ); ?></th>
 				</tr>
 				<?php
-				$wdshipping_email_details = get_option( 'wdshipping_email_details', array() );
-				if( ! empty( $wdshipping_email_details ) ) {
-					foreach( $wdshipping_email_details as $key=>$details ) {
+				$wdshipping_shipping_details = get_option( 'wdshipping_shipping_details', array() );
+				if( ! empty( $wdshipping_shipping_details ) ) {
+					foreach( $wdshipping_shipping_details as $key=>$details ) {
 						?>
 						<tr>
 							<td><?php echo $details['title']; ?></td>
@@ -199,7 +201,7 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 				$enable = filter_input( INPUT_POST, 'wdshipping_enable',FILTER_SANITIZE_STRING );
 				$enable = empty( $enable ) ? 'off' : $enable;
 
-				$wdshipping_email_details = get_option( 'wdshipping_email_details', array() );
+				$wdshipping_shipping_details = get_option( 'wdshipping_shipping_details', array() );
 
 				$data = array(
 					'title' => $title,
@@ -207,37 +209,37 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 					'enable' => $enable,
 				);
 
-				if( isset( $_POST['wdshipping_update'] ) && ! empty( $_POST['wdshipping_update'] ) ) {
-					if( ! empty( $wdshipping_email_details ) ) {
-						foreach ( $wdshipping_email_details as $key => $details ) {
+				if( isset( $_POST['wdshipping_update'] ) ) {
+					if( ! empty( $wdshipping_shipping_details ) ) {
+						foreach ( $wdshipping_shipping_details as $key => $details ) {
 							if( $key == $_POST['wdshipping_update'] ) {
-								$wdshipping_email_details[$key] = $data;
+								$wdshipping_shipping_details[$key] = $data;
 							}
 						}
 					}
 				} else {
-					array_push( $wdshipping_email_details, $data );
+					array_push( $wdshipping_shipping_details, $data );
 				}
 
-				update_option( 'wdshipping_email_details', $wdshipping_email_details );
+				update_option( 'wdshipping_shipping_details', $wdshipping_shipping_details );
 
 				add_settings_error( 'wdshipping-settings', 'error_code', $title.' is saved and if you have enabled it then you can see it in Woocommerce Shipping Settings Now', 'success' );
 
-			} else if( isset( $_REQUEST['wdshipping_delete'] ) && ! empty( $_REQUEST['wdshipping_delete'] ) ) {
+			} else if( isset( $_REQUEST['wdshipping_delete'] ) ) {
 
-				$wdshipping_email_details = get_option( 'wdshipping_email_details', array() );
+				$wdshipping_shipping_details = get_option( 'wdshipping_shipping_details', array() );
 
-				$delete_key = $_POST['delete'];
+				$delete_key = $_REQUEST['wdshipping_delete'];
 
-				if( ! empty( $wdshipping_email_details ) ) {
-					foreach ( $wdshipping_email_details as $key => $details ) {
+				if( ! empty( $wdshipping_shipping_details ) ) {
+					foreach ( $wdshipping_shipping_details as $key => $details ) {
 						if( $key == $delete_key ) {
-							unset( $wdshipping_email_details[$key] );
+							unset( $wdshipping_shipping_details[$key] );
 						}
 					}
 				}
 
-				update_option( 'wdshipping_email_details', $wdshipping_email_details );
+				update_option( 'wdshipping_shipping_details', $wdshipping_shipping_details );
 
 				add_settings_error( 'wdshipping-settings', 'error_code', 'Shipping settings deleted!', 'success' );
 
