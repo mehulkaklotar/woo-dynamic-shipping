@@ -91,6 +91,70 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 
 		function wdshipping_render_add_shipping_section() {
 
+			$wdshipping_detail = array();
+			if( isset( $_REQUEST['wdshipping_edit'] ) ) {
+				$wdshipping_shipping_details = get_option( 'wdshipping_shipping_details', array() );
+				if( ! empty( $wdshipping_shipping_details ) ) {
+					foreach ( $wdshipping_shipping_details as $key => $details ) {
+						if( $_REQUEST['wdshipping_edit'] == $key ) {
+							$wdshipping_detail = $details;
+						}
+					}
+				}
+			}
+
+			?>
+			<form method="post" action="">
+				<table class="form-table">
+					<tbody>
+					<tr>
+						<th scope="row">
+							<?php _e( 'Title', WDShipping_TEXT_DOMAIN ); ?>
+							<span style="display: block; font-size: 12px; font-weight: 300;">
+							<?php _e( '( Title of Shipping. )' ); ?>
+								</span>
+						</th>
+						<td>
+							<input name="wdshipping_title" id="wdshipping_title" type="text" required value="<?php echo isset( $wdshipping_detail['title'] ) ? $wdshipping_detail['title'] : ''; ?>" placeholder="<?php _e( 'Title', WDShipping_TEXT_DOMAIN ); ?>" />
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<?php _e( 'Description', WDShipping_TEXT_DOMAIN ); ?>
+							<span style="display: block; font-size: 12px; font-weight: 300;">
+							<?php _e( '( Description of shipping method. )' ); ?>
+								</span>
+						</th>
+						<td>
+							<input name="wdshipping_description" id="wdshipping_description" required type="text" value="<?php echo isset( $wdshipping_detail['description'] ) ? $wdshipping_detail['description'] : ''; ?>" placeholder="<?php _e( 'Description', WDShipping_TEXT_DOMAIN ); ?>" />
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<?php _e( 'Enable?', WCEmails_TEXT_DOMAIN ); ?>
+							<span style="display: block; font-size: 12px; font-weight: 300;">
+							<?php _e( '( Enable this shipping here. )' ); ?>
+								</span>
+						</th>
+						<td>
+							<input name="wdshipping_enable" id="wdshipping_enable" type="checkbox" <?php echo isset( $wdshipping_detail['enable'] ) && $wdshipping_detail['enable'] == 'on' ? 'checked="checked"' : ''; ?> />
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				<p class="submit">
+					<input type="submit" name="wdshipping_submit" id="wdshipping_submit" class="button button-primary" value="Save Changes">
+				</p>
+				<?php
+				if( isset( $_REQUEST['wdshipping_edit'] ) ) {
+					?>
+					<input type="hidden" name="wdshipping_update" id="wdshipping_update" value="<?php echo $_REQUEST['wdshipping_edit']; ?>" />
+					<?php
+				}
+				?>
+			</form>
+			<?php
+
 		}
 
 		function wdshipping_render_view_shipping_section() {
