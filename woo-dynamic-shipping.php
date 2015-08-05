@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if( ! class_exists( 'Woo_Dynamic_Shipping' ) ) {
+if ( ! class_exists( 'Woo_Dynamic_Shipping' ) ) {
 
 	/**
 	 * Main Woo Dynamic Shipping Class
@@ -151,7 +151,7 @@ if( ! class_exists( 'Woo_Dynamic_Shipping' ) ) {
  * @since  0.1
  * @return Woo_Dynamic_Shipping
  */
-function WDShipping() {
+function woo_dynamic_shipping() {
 	return Woo_Dynamic_Shipping::instance();
 }
-WDShipping();
+woo_dynamic_shipping();

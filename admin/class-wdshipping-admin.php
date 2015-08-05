@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if( ! class_exists( 'WDShipping_Admin' ) ) {
+if ( ! class_exists( 'WDShipping_Admin' ) ) {
 
 	/**
 	 * Admin WooCommerce Dynamic Shipping Class
@@ -41,7 +41,7 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 		 */
 		public function __construct() {
 
-			add_action('admin_menu', array( $this, 'wdshipping_settings_menu' ) );
+			add_action( 'admin_menu', array( $this, 'wdshipping_settings_menu' ) );
 
 			add_action( 'admin_init', array( $this, 'wdshipping_email_actions_details' ) );
 
@@ -51,7 +51,7 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 
 		function wdshipping_settings_menu() {
 
-			add_options_page( __( 'WooCommerce Dynamic Shipping', WDShipping_TEXT_DOMAIN ), 'WooCommerce Dynamic Shipping', 'manage_options', 'wdshipping-settings', array( $this, 'wdshipping_settings_callback' ));
+			add_options_page( __( 'WooCommerce Dynamic Shipping', WDShipping_TEXT_DOMAIN ), 'WooCommerce Dynamic Shipping', 'manage_options', 'wdshipping-settings', array( $this, 'wdshipping_settings_callback' ) );
 
 		}
 
@@ -61,19 +61,19 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 			<div class="wrap">
 				<h2><?php _e( 'Woocommerce Dynamic Shipping Settings', WDShipping_TEXT_DOMAIN ); ?></h2>
 				<?php
-				if ( ! isset ( $_REQUEST[ 'type' ] ) ) {
+				if ( ! isset( $_REQUEST['type'] ) ) {
 					$type = 'today';
 				} else {
-					$type = $_REQUEST[ 'type' ];
+					$type = $_REQUEST['type'];
 				}
-				$all_types = array ( 'add-shipping', 'view-shipping' );
-				if ( ! in_array ( $type, $all_types ) ) {
+				$all_types = array( 'add-shipping', 'view-shipping' );
+				if ( ! in_array( $type, $all_types ) ) {
 					$type = 'add-shipping';
 				}
 				?>
 				<ul class="subsubsub">
-					<li class="today"><a class ="<?php echo ($type == 'add-shipping') ? 'current' : ''; ?>" href="<?php echo add_query_arg ( array ( 'type' => 'add-shipping' ), admin_url ( 'admin.php?page=wdshipping-settings' ) ); ?>"><?php _e( 'Add Shipping', WDShipping_TEXT_DOMAIN ); ?></a> |</li>
-					<li class="today"><a class ="<?php echo ($type == 'view-shipping') ? 'current' : ''; ?>" href="<?php echo add_query_arg ( array ( 'type' => 'view-shipping' ), admin_url ( 'admin.php?page=wdshipping-settings' ) ); ?>"><?php _e( 'View Your Shippings', WDShipping_TEXT_DOMAIN ); ?></a></li>
+					<li class="today"><a class ="<?php echo ( 'add-shipping' == $type ) ? 'current' : ''; ?>" href="<?php echo add_query_arg( array( 'type' => 'add-shipping' ), admin_url( 'admin.php?page=wdshipping-settings' ) ); ?>"><?php _e( 'Add Shipping', WDShipping_TEXT_DOMAIN ); ?></a> |</li>
+					<li class="today"><a class ="<?php echo ( 'view-shipping' == $type ) ? 'current' : ''; ?>" href="<?php echo add_query_arg( array( 'type' => 'view-shipping' ), admin_url( 'admin.php?page=wdshipping-settings' ) ); ?>"><?php _e( 'View Your Shippings', WDShipping_TEXT_DOMAIN ); ?></a></li>
 				</ul>
 				<?php $this->wdshipping_render_sections( $type ); ?>
 			</div>
@@ -83,9 +83,9 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 
 		function wdshipping_render_sections( $type ) {
 
-			if( $type == 'add-shipping' ) {
+			if ( 'add-shipping' == $type ) {
 				$this->wdshipping_render_add_shipping_section();
-			} else if( $type == 'view-shipping' ) {
+			} else if ( 'view-shipping' == $type ) {
 				$this->wdshipping_render_view_shipping_section();
 			} else {
 				$this->wdshipping_render_add_shipping_section();
@@ -96,11 +96,11 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 		function wdshipping_render_add_shipping_section() {
 
 			$wdshipping_detail = array();
-			if( isset( $_REQUEST['wdshipping_edit'] ) ) {
+			if ( isset( $_REQUEST['wdshipping_edit'] ) ) {
 				$wdshipping_shipping_details = get_option( 'wdshipping_shipping_details', array() );
-				if( ! empty( $wdshipping_shipping_details ) ) {
+				if ( ! empty( $wdshipping_shipping_details ) ) {
 					foreach ( $wdshipping_shipping_details as $key => $details ) {
-						if( $_REQUEST['wdshipping_edit'] == $key ) {
+						if ( $_REQUEST['wdshipping_edit'] == $key ) {
 							$wdshipping_detail = $details;
 						}
 					}
@@ -141,7 +141,7 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 								</span>
 						</th>
 						<td>
-							<input name="wdshipping_enable" id="wdshipping_enable" type="checkbox" <?php echo isset( $wdshipping_detail['enable'] ) && $wdshipping_detail['enable'] == 'on' ? 'checked="checked"' : ''; ?> />
+							<input name="wdshipping_enable" id="wdshipping_enable" type="checkbox" <?php echo ( isset( $wdshipping_detail['enable'] ) && 'on' == $wdshipping_detail['enable'] ) ? 'checked="checked"' : ''; ?> />
 						</td>
 					</tr>
 					</tbody>
@@ -150,7 +150,7 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 					<input type="submit" name="wdshipping_submit" id="wdshipping_submit" class="button button-primary" value="Save Changes">
 				</p>
 				<?php
-				if( isset( $_REQUEST['wdshipping_edit'] ) ) {
+				if ( isset( $_REQUEST['wdshipping_edit'] ) ) {
 					?>
 					<input type="hidden" name="wdshipping_update" id="wdshipping_update" value="<?php echo $_REQUEST['wdshipping_edit']; ?>" />
 					<?php
@@ -173,16 +173,16 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 				</tr>
 				<?php
 				$wdshipping_shipping_details = get_option( 'wdshipping_shipping_details', array() );
-				if( ! empty( $wdshipping_shipping_details ) ) {
-					foreach( $wdshipping_shipping_details as $key=>$details ) {
+				if ( ! empty( $wdshipping_shipping_details ) ) {
+					foreach ( $wdshipping_shipping_details as $key => $details ) {
 						?>
 						<tr>
 							<td><?php echo $details['title']; ?></td>
 							<td><?php echo $details['description']; ?></td>
-							<td><?php echo $details['enable'] == 'on' ? 'Yes' : 'No'; ?></td>
+							<td><?php echo 'on' == $details['enable'] ? 'Yes' : 'No'; ?></td>
 							<td>
-								<a href="<?php echo add_query_arg ( array ( 'type' => 'add-shipping', 'wdshipping_edit' => $key ), admin_url ( 'admin.php?page=wdshipping-settings' ) ); ?>" data-key="<?php echo $key; ?>"><?php _e( 'Edit', WDShipping_TEXT_DOMAIN ); ?></a>
-								<a href="<?php echo add_query_arg ( array ( 'type' => 'view-shipping', 'wdshipping_delete' => $key ), admin_url ( 'admin.php?page=wdshipping-settings' ) ); ?>" class="wdshipping_delete" data-key="<?php echo $key; ?>"><?php _e( 'Delete', WDShipping_TEXT_DOMAIN ); ?></a>
+								<a href="<?php echo add_query_arg( array( 'type' => 'add-shipping', 'wdshipping_edit' => $key ), admin_url( 'admin.php?page=wdshipping-settings' ) ); ?>" data-key="<?php echo $key; ?>"><?php _e( 'Edit', WDShipping_TEXT_DOMAIN ); ?></a>
+								<a href="<?php echo add_query_arg( array( 'type' => 'view-shipping', 'wdshipping_delete' => $key ), admin_url( 'admin.php?page=wdshipping-settings' ) ); ?>" class="wdshipping_delete" data-key="<?php echo $key; ?>"><?php _e( 'Delete', WDShipping_TEXT_DOMAIN ); ?></a>
 							</td>
 						</tr>
 						<?php
@@ -196,7 +196,7 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 
 		function wdshipping_email_actions_details() {
 
-			if( isset( $_POST['wdshipping_submit'] ) ) {
+			if ( isset( $_POST['wdshipping_submit'] ) ) {
 
 				$title = filter_input( INPUT_POST, 'wdshipping_title',FILTER_SANITIZE_STRING );
 				$description = filter_input( INPUT_POST, 'wdshipping_description',FILTER_SANITIZE_STRING );
@@ -211,11 +211,11 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 					'enable' => $enable,
 				);
 
-				if( isset( $_POST['wdshipping_update'] ) ) {
-					if( ! empty( $wdshipping_shipping_details ) ) {
+				if ( isset( $_POST['wdshipping_update'] ) ) {
+					if ( ! empty( $wdshipping_shipping_details ) ) {
 						foreach ( $wdshipping_shipping_details as $key => $details ) {
-							if( $key == $_POST['wdshipping_update'] ) {
-								$wdshipping_shipping_details[$key] = $data;
+							if ( $key == $_POST['wdshipping_update'] ) {
+								$wdshipping_shipping_details[ $key ] = $data;
 							}
 						}
 					}
@@ -227,16 +227,16 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 
 				add_settings_error( 'wdshipping-settings', 'error_code', $title.' is saved and if you have enabled it then you can see it in Woocommerce Shipping Settings Now', 'success' );
 
-			} else if( isset( $_REQUEST['wdshipping_delete'] ) ) {
+			} else if ( isset( $_REQUEST['wdshipping_delete'] ) ) {
 
 				$wdshipping_shipping_details = get_option( 'wdshipping_shipping_details', array() );
 
 				$delete_key = $_REQUEST['wdshipping_delete'];
 
-				if( ! empty( $wdshipping_shipping_details ) ) {
+				if ( ! empty( $wdshipping_shipping_details ) ) {
 					foreach ( $wdshipping_shipping_details as $key => $details ) {
-						if( $key == $delete_key ) {
-							unset( $wdshipping_shipping_details[$key] );
+						if ( $key == $delete_key ) {
+							unset( $wdshipping_shipping_details[ $key ] );
 						}
 					}
 				}
@@ -260,16 +260,15 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 
 			$wdshipping_shipping_details = get_option( 'wdshipping_shipping_details', array() );
 
-			if( ! empty( $wdshipping_shipping_details ) ) {
+			if ( ! empty( $wdshipping_shipping_details ) ) {
 				foreach ( $wdshipping_shipping_details as $key => $method ) {
 
 					$enable = $method['enable'];
 
-					if ( $enable == 'on' ) {
+					if ( 'on' == $enable ) {
 
 						$title          = $method['title'];
 						$id = str_replace( ' ', '_', $title );
-
 
 						$shipping_methods[] = 'WC_' . $id . '_Shipping';
 
@@ -285,20 +284,20 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 
 			$wdshipping_shipping_details = get_option( 'wdshipping_shipping_details', array() );
 
-			if( ! empty( $wdshipping_shipping_details ) ) {
+			if ( ! empty( $wdshipping_shipping_details ) ) {
 				foreach ( $wdshipping_shipping_details as $key => $method ) {
 
 					$enable = $method['enable'];
 
-					if( $enable == 'on' ) {
+					if ( 'on' == $enable ) {
 
 						$title          = $method['title'];
 						$description    = $method['description'];
 
 						$id = str_replace( ' ', '_', $title );
 
-						eval("
-						class WC_".$id."_Shipping extends WC_Shipping_Method {
+						eval('
+                        class WC_'.$id."_Shipping extends WC_Shipping_Method {
 
 							/**
 							 * __construct function.
@@ -941,7 +940,6 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
 						");
 
 					}
-
 				}
 			}
 
@@ -957,7 +955,7 @@ if( ! class_exists( 'WDShipping_Admin' ) ) {
  * @since  0.1
  * @return WDShipping_Admin
  */
-function WDShipping_Admin() {
+function woo_dynamic_shipping_admin() {
 	return WDShipping_Admin::instance();
 }
-WDShipping_Admin();
+woo_dynamic_shipping_admin();
