@@ -116,6 +116,7 @@ if ( ! class_exists( 'Woo_Dynamic_Shipping' ) ) {
 		 */
 		public function includes() {
 			include_once( 'admin/class-wdshipping-admin.php' );
+			include_once( 'admin/class-wdshipping-instance.php' );
 		}
 
 		/**
